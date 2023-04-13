@@ -37,6 +37,15 @@ public class TaskResource {
         }
     }
 
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addTask(String taskName) {
+        String taskId = UUID.randomUUID().toString(); // generate random ID
+        taskList.add(new Task(false, taskId, taskName));
+        return Response.status(Response.Status.CREATED).build();
+    }
+    
 }
 
 

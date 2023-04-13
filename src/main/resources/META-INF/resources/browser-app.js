@@ -71,21 +71,21 @@ formDOM.addEventListener("submit", async (e) => {
     try {
         const response = await fetch("/api/v1/tasks", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name })
+            headers: { "Content-Type": "text/plain" },
+            body: name
         });
         if (response.ok) {
             showTasks();
             taskInputDOM.value = "";
             formAlertDOM.style.display = "block";
-            formAlertDOM.textContent = `success, task added`;
+            formAlertDOM.textContent = `Success, task added`;
             formAlertDOM.classList.add("text-success");
         } else {
             throw new Error("Error adding task");
         }
     } catch (error) {
         formAlertDOM.style.display = "block";
-        formAlertDOM.innerHTML = `error, please try again`;
+        formAlertDOM.innerHTML = `Error, please try again`;
     }
     setTimeout(() => {
         formAlertDOM.style.display = "none";
@@ -93,3 +93,4 @@ formDOM.addEventListener("submit", async (e) => {
     }, 3000);
     
 });
+
