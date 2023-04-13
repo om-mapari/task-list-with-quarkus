@@ -20,7 +20,7 @@ public class TaskResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getMobileList() {
+    public Response getTaskList() {
         return Response.ok(taskList).build();
     }
 
@@ -45,7 +45,34 @@ public class TaskResource {
         taskList.add(new Task(false, taskId, taskName));
         return Response.status(Response.Status.CREATED).build();
     }
-    
+
+    @GET
+    @Path("/{taskId}")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findTaskById(@PathParam("taskId") String taskId) {
+        Optional<Task> task = taskList.stream()
+        .filter(t -> t.getId().equals(taskId))
+        .findFirst();
+
+        if (task.isPresent()) {
+            Task foundTask = task.get();
+            // System.out.println(foundTask.getName());
+            return Response.ok(foundTask).build();
+        } else {
+            return Response.ok(taskList).build();
+        }        
+    }
+
+    // @PUT
+    // @Path("/{oldtaskId}")
+    // @Consumes(MediaType.TEXT_PLAIN)
+    // @Produces(MediaType.TEXT_PLAIN)
+    // public Response updateMobile(@PathParam("oldtaskId") String oldtaskId) {
+    //     System.out.println(oldtaskId);
+
+    //     return Response.ok(oldtaskId).build();
+    // }
 }
 
 

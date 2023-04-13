@@ -11,10 +11,11 @@ let tempName;
 console.log("id => ", id);
 const showTask = async () => {
     try {
-        const {
-            data: { task },
-        } = await axios.get(`/api/v1/tasks/${id}`);
-        const { _id: taskID, completed, name } = task;
+        const response = await fetch(`/api/v1/tasks/${id}`);
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        const { id: taskID, completed, name } = await response.json();
         taskIDDOM.textContent = taskID;
         taskNameDOM.value = name;
         tempName = name;
@@ -22,12 +23,13 @@ const showTask = async () => {
             taskCompletedDOM.checked = true;
         }
     } catch (error) {
-        console.log("object");
-        console.log(error);
+        console.error(error);
     }
 };
 
 showTask();
+
+
 
 editFormDOM.addEventListener("submit", async (e) => {
     editBtnDOM.textContent = "Loading...";
