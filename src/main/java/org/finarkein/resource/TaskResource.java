@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.*;
 
 @Path("/api/v1/tasks")
-public class MobileResource {
+public class TaskResource {
 
 
     List<Task> taskList = new ArrayList<>(
